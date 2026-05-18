@@ -1,11 +1,11 @@
-import Practice3 from "./components/Practice3";
+import Practice4 from "./components/Practice4";
 import "./App.css";
 
 function App() {
   return (
     <>
       <section id="center">
-        <Practice3 />
+        <Practice4 />
       </section>
     </>
   );
