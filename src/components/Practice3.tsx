@@ -30,16 +30,16 @@ function CartItem() {
   }, 0);
   return (
     <div>
-      {products.map((products) => (
-        <div key={products.id}>
+      {products.map((product) => (
+        <div key={product.id}>
           {/* 상품명 */}
-          <p>{products.name}</p>
+          <p>{product.name}</p>
           {/* 가격 */}
-          <span>{products.price}</span>
+          <span>{product.price}</span>
           {/* 해당수량 */}
-          <h5>{amount[products.id]}</h5>
-          <button onClick={() => decrease(products.id)}>-</button>
-          <button onClick={() => increase(products.id)}>+</button>
+          <h5>{amount[product.id]}</h5>
+          <button onClick={() => decrease(product.id)}>-</button>
+          <button onClick={() => increase(product.id)}>+</button>
         </div>
       ))}
       {/* 총금액 */}
