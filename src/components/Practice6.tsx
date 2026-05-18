@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 
 function Practice6() {
   interface User {
@@ -11,7 +11,6 @@ function Practice6() {
   // 컴포넌트가 처음 화면에 나타날 때 딱 한 번만
   // 아래 API를 호출해서 users에 저장해봐요
   // https://jsonplaceholder.typicode.com/users
-
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
