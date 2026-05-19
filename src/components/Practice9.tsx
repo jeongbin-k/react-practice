@@ -48,7 +48,7 @@ function GrandChild() {
   return (
     <div>
       <p>
-        안녕하세요 {user.name}님, {user.age}살이시군요!
+        안녕하세요 {user?.name}님, {user?.age}살이시군요!
       </p>
     </div>
   );
