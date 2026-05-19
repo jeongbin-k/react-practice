@@ -5,9 +5,10 @@ function Practice8() {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    if (!isRunning) return; // 실행중 아니면 그냥 종료
-
+    if (!isRunning) return;
     const timer = setInterval(() => {
+      // console.log 대신 여기서 count를 올리면 됨
+      // 근데 setCount 안에서 count를 쓸 떄 주의할게 있음
       setCount((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(timer);
