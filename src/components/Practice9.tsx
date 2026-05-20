@@ -42,13 +42,13 @@ function Child() {
 
 function GrandChild() {
   // 여기서 useContext로 user 꺼내봐요!
-
   const user = useContext(UserContext);
+  if (!user) return null;
 
   return (
     <div>
       <p>
-        안녕하세요 {user?.name}님, {user?.age}살이시군요!
+        안녕하세요 {user.name}님, {user.age}살이시군요!
       </p>
     </div>
   );
