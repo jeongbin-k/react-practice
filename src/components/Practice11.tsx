@@ -1,9 +1,13 @@
 // Practice11.tsx
 // 커스텀 훅 - useFetch
 import { useEffect, useState } from "react";
+interface User {
+  id: number;
+  name: string;
+}
 
 function Practice11() {
-  const { data, loading } = useFetch(
+  const { data, loading } = useFetch<User[]>(
     "https://jsonplaceholder.typicode.com/users",
   );
   return (
@@ -16,12 +20,12 @@ function Practice11() {
 }
 
 // 커스텀 훅 만들기
-function useFetch(url: string) {
+function useFetch<T>(url: string) {
   // Practice6에서 했던 fetch 로직을 여기에 넣어봐요
   // data, loading 두 가지 state가 필요해요
   // loading이 true면 "로딩중..." 보여주고
   // data 있으면 반환해요
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch(url)
