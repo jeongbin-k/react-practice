@@ -22,3 +22,12 @@ function Practice14() {
 }
 
 export default Practice14;
+
+// 현재 예제에서는 차이가 눈에 안보임
+// 자식 컴포넌트에 함수를 props로 넘길때
+{
+  /* <ChildComponents onClick ={handleClick} /> */
+}
+
+// 부모가 리렌더링될 때마다 handleClick이 새로 만들어지면 자식도 계속 리렌더링됨
+// -> 하지만, useCallback으로 감싸면 불필요한 리렌더링을 막을 수 있음.
