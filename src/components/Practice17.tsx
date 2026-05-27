@@ -10,7 +10,10 @@ function Practice17() {
     // 일부러 틀린 URL이에요 → 에러 처리 확인용
     // https://jsonplaceholder.typicode.com/users/9999
     fetch("https://jsonplaceholder.typicode.com/users/9999")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("404 에러!"); // 수동으로 에러 던지기
+        return res.json();
+      })
       .then((data) => {
         setData(data);
         setLoading(false); // 성공하면 로딩 끝
