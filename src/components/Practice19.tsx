@@ -16,7 +16,7 @@ export default function Practice19() {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts?_limit=20")
       .then((res) => {
-        if (!res.ok) throw new Error("404 에러");
+        if (!res.ok) throw new Error("404 에러 발생!");
         return res.json();
       })
       .then((data) => {
@@ -34,17 +34,16 @@ export default function Practice19() {
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => post.title.includes(search));
   }, [posts, search]);
-
   return (
     <div>
       <input
         type="text"
         value={search}
-        placeholder="검색어를 입력해주세요."
         onChange={(e) => setSearch(e.target.value)}
+        placeholder="검색어를 입력해주세요."
       />
       {filteredPosts.map((post) => (
-        <p key={post.id}>{post.title}</p>
+        <p key={post.id}> {post.title}</p>
       ))}
     </div>
   );
