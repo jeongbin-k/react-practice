@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 
 interface Post {
   id: number;
@@ -13,19 +13,21 @@ function Practice18() {
 
   // https://jsonplaceholder.typicode.com/posts?_limit=10
   // 위 URL로 게시글 10개 불러오기
-  fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
-    .then((res) => {
-      if (!res.ok) throw new Error("404 에러!");
-      return res.json();
-    })
-    .then((data) => {
-      setPosts(data);
-      setLoading(false);
-    })
-    .catch((err) => {
-      setError(err);
-      setLoading(false);
-    });
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
+      .then((res) => {
+        if (!res.ok) throw new Error("404에러");
+        return res.json();
+      })
+      .then((data) => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        return setError(err);
+        return setLoading(false);
+      });
+  }, []);
 
   // 로딩중, 에러 처리
   if (loading) return <p>로딩 중...</p>;
@@ -34,13 +36,13 @@ function Practice18() {
   return (
     <div>
       {/* 게시글 목록 — 클릭하면 selectedId 바뀌게 */}
-      {/* selectedId 있으면 "선택된 게시글 ID: {selectedId}" 보여주기 */}
       {posts.map((post) => (
         <div key={post.id} onClick={() => setSelectId(post.id)}>
           <p>{post.title}</p>
         </div>
       ))}
-      {selectedId && <p>선택된 게시글 ID: {selectedId}</p>}
+      {/* selectedId 있으면 "선택된 게시글 ID: {selectedId}" 보여주기 */}
+      {selectedId && <p>선택된 게시글ID: {selectedId}</p>}
     </div>
   );
 }
