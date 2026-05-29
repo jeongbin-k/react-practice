@@ -11,12 +11,13 @@ export default function Practice19() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   // https://jsonplaceholder.typicode.com/posts?_limit=20
   // 게시글 20개 불러오기
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts?_limit=20")
       .then((res) => {
-        if (!res.ok) throw new Error("404 에러 발생!");
+        if (!res.ok) throw new Error("404 에러");
         return res.json();
       })
       .then((data) => {
@@ -34,16 +35,19 @@ export default function Practice19() {
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => post.title.includes(search));
   }, [posts, search]);
+
   return (
     <div>
       <input
-        type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        type="text"
         placeholder="검색어를 입력해주세요."
       />
       {filteredPosts.map((post) => (
-        <p key={post.id}> {post.title}</p>
+        <div key={post.id}>
+          <p>{post.title}</p>
+        </div>
       ))}
     </div>
   );
