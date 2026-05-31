@@ -13,7 +13,7 @@ export default function Practice19() {
   const [error, setError] = useState(null);
 
   // https://jsonplaceholder.typicode.com/posts?_limit=20
-  // 게시글 20개 불러오기
+
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts?_limit=20")
       .then((res) => {
