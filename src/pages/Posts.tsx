@@ -1,0 +1,53 @@
+import { useState, useEffect, lazy } from "react";
+import { useNavigate } from "react-router-dom";
+
+interface Post {
+  id: number;
+  title: string;
+}
+
+function Practice18() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedId, setSelectId] = useState<number | null>(null);
+
+  const navigate = useNavigate();
+
+  // https://jsonplaceholder.typicode.com/posts?_limit=10
+  // 위 URL로 게시글 10개 불러오기
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
+      .then((res) => {
+        if (!res.ok) throw new Error("404에러");
+        return res.json();
+      })
+      .then((data) => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        return setError(err);
+        return setLoading(false);
+      });
+  }, []);
+
+  // 로딩중, 에러 처리
+  if (loading) return <p>로딩 중...</p>;
+  if (error) return <p>에러가 발생했습니다.</p>;
+
+  return (
+    <div>
+      {/* 게시글 목록 — 클릭하면 selectedId 바뀌게 */}
+      {posts.map((post) => (
+        <div key={post.id} onClick={() => navigate(`/posts/${post.id}`)}>
+          <p>{post.title}</p>
+        </div>
+      ))}
+      {/* selectedId 있으면 "선택된 게시글 ID: {selectedId}" 보여주기 */}
+      {selectedId && <p>선택된 게시글ID: {selectedId}</p>}
+    </div>
+  );
+}
+
+export default Practice18;
