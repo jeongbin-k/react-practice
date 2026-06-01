@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 interface Post {
   id: number;
   title: string;
-  body: string; // 게시글 내용
+  body: string; // 게시글
 }
-
 function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
@@ -17,14 +16,14 @@ function PostDetail() {
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((res) => {
-        if (!res.ok) throw new Error("404 에러");
+        if (!res.ok) throw new Error("404에러");
         return res.json();
       })
       .then((data) => {
         setPost(data);
         setLoading(false);
       });
-  }, [id]); // id 바뀔 때마다 실행
+  }, [id]);
 
   if (loading) return <p>로딩 중...</p>;
   return (
