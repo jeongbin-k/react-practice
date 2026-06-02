@@ -12,7 +12,6 @@ function PostDetail() {
   const [loading, setLoading] = useState(true);
 
   // https://jsonplaceholder.typicode.com/posts/${id}
-  // id로 게시글 하나만 불러오기
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((res) => {
