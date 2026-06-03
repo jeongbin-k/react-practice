@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Post {
@@ -6,20 +6,19 @@ interface Post {
   title: string;
 }
 
-function Practice18() {
+function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedId, setSelectId] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
-
   // https://jsonplaceholder.typicode.com/posts?_limit=10
   // 위 URL로 게시글 10개 불러오기
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
       .then((res) => {
-        if (!res.ok) throw new Error("404에러");
+        if (!res.ok) throw new Error("404 에러");
         return res.json();
       })
       .then((data) => {
@@ -27,27 +26,33 @@ function Practice18() {
         setLoading(false);
       })
       .catch((err) => {
-        return setError(err);
-        return setLoading(false);
+        setError(err);
+        setLoading(false);
       });
   }, []);
 
-  // 로딩중, 에러 처리
-  if (loading) return <p>로딩 중...</p>;
-  if (error) return <p>에러가 발생했습니다.</p>;
+  const filteredPost = useMemo(() => {
+    return posts.filter((post) => post.title.includes(search));
+  }, [posts, search]);
 
+  // 로딩중, 에러 처리
+  if (loading) return <p>로딩 중..</p>;
+  if (error) return <p>에러가 발생했습니다.</p>;
   return (
     <div>
-      {/* 게시글 목록 — 클릭하면 selectedId 바뀌게 */}
-      {posts.map((post) => (
-        <div key={post.id} onClick={() => navigate(`/posts/${post.id}`)}>
-          <p>{post.title}</p>
-        </div>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="검색어를 입력해주세요."
+      />
+      {filteredPost.map((post) => (
+        <p key={post.id} onClick={() => navigate(`/posts/${post.id}`)}>
+          {post.title}
+        </p>
       ))}
-      {/* selectedId 있으면 "선택된 게시글 ID: {selectedId}" 보여주기 */}
-      {selectedId && <p>선택된 게시글ID: {selectedId}</p>}
     </div>
   );
 }
 
-export default Practice18;
+export default Posts;
