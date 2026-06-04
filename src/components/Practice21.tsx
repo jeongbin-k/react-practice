@@ -1,7 +1,7 @@
 // Practice21.tsx
 // react-hook-form 로그인 폼
 
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 
 interface LoginForm {
   email: string;
@@ -36,7 +36,6 @@ function Practice21() {
       </div>
       <div>
         <input
-          type="password"
           {...register("password", {
             required: "비밀번호를 입력해주세요",
             minLength: {
